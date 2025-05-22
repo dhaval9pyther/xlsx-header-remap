@@ -17,6 +17,7 @@ export const  remapHeader = async(headerMapping, fileName, outputName, addNewCol
     );
     
     console.log('Remapping Result:', result.success);
+    console.log('Remapping Result:', result.message);
     console.log('Headers successfully remapped!', fileName.split('/').pop());
     console.log('------------------------------------------------------------')
     if (false && result.success) {

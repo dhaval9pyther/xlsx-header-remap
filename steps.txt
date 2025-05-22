@@ -1,0 +1,31 @@
+//steps
+
+1. go to remapHeadersCode in file manager
+2. type "cmd" in path header and hit enter.
+3. "cd src"
+4. enter command "code ." in cmd
+5. create config for country and add into headerConfig.js
+i.e 
+    "BOTSWANA_EXPORT": {
+        "BUYER_NAME": "IMPORTER",
+        "COUNTRY_OF_DESTINATION": "DESTINATION",
+        "EXPORTER_NAME": "EXPORTER",
+        "EXPORT_DATE": "DATE",
+        "FOB_VALUE_IN_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "QUANTITY": "QUANTITY",
+        "QUANTITY_UNIT": "UNIT",
+        "ADD_NEW_COLUMNS_API": ["PRODUCT", "UNIT RATE", "CURRENCY", "ORIGIN"]
+    }
+
+6. Create automatic sctipt.
+
+    replace inputfile path with <EnterInputFilePath>
+    replace outputfile path with <EnterInputFilePath>
+    replace county and im/ex with <countryName_im/ex>
+
+    $> node main.js --country="<countryName_im/ex>" --input="<EnterInputFilePath>" --output="<EnterOutputFilePath>"
+
+    add all commad in .\auto-remap.bat sctipt
+
+7. run automatic sctipt using command $> .\auto-remap.bat

@@ -1,7 +1,18 @@
 // headerMapper.js
 import xlsx from 'xlsx';
-import fs from 'fs/promises';
+import fs from 'fs';
+import path from 'path';
 
+
+async function ensureFoldersExistFromFinal(inputFilePath) {
+  try {
+    const folderPath = path.dirname(inputFilePath); // ✅ Get just the folder path
+    await fs.promises.mkdir(folderPath, { recursive: true });
+    //console.log(`✅ Folders created or already exist: ${folderPath}`);
+  } catch (error) {
+    console.error('❌ Error ensuring folders:', error);
+  }
+}
 /**
  * Checks and replaces headers in an XLSX file based on a mapping object
  * @param {string} inputFilePath - Path to the input XLSX file
@@ -14,7 +25,7 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
   try {
     // Check if input file exists
     try {
-      await fs.access(inputFilePath);
+      await fs.accessSync(inputFilePath);
     } catch (error) {
       return {
         success: false,
@@ -105,7 +116,8 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
         addedColumns: newColumns
       };
     });
-    
+
+    await ensureFoldersExistFromFinal(outputFilePath)
     // Write the updated workbook to the output file
     xlsx.writeFile(workbook, outputFilePath,{ compression: true });
     
@@ -129,7 +141,7 @@ export const validateXlsxHeaders = async(filePath, expectedHeaders) =>{
   try {
     // Check if file exists
     try {
-      await fs.access(filePath);
+      await fs.accessSync(filePath);
     } catch (error) {
       return {
         valid: false,
