@@ -17,9 +17,41 @@ const getConfigs = (key) => {
     const countyType = countyTypeArgs?.split("=")[1].toUpperCase();
 
     console.log("county::>",countyType)
+
+    // const addNewColumns = headerMap[countyType].ADD_NEW_COLUMNS_API;
+    // delete headerMap[countyType].ADD_NEW_COLUMNS_API;
+    // const headerMapping = headerMap[countyType];
+
+    return {
+        county: county.toUpperCase(),
+        //headerMapping: headerMapping,
+        _inputDir: _inputDir,
+        //_outputDir: _outputDir,
+        // addNewColumns: addNewColumns 
+        }
+}
+
+export const detectTradeType = (filePath) => {
+  const upperPath = filePath.toUpperCase();
+
+  if (upperPath.includes("/IMPORT/")) {
+    return "IMPORT";
+  } else if (upperPath.includes("/EXPORT/")) {
+    return "EXPORT";
+  } else {
+    return "UNKNOWN";
+  }
+}
+
+
+const getHeaderMap = (county, filePath) => {
+
+    const tradeType = detectTradeType(filePath);
+    let countyType = `${county}_${tradeType.toUpperCase()}`;
+
     if (!headerMap[countyType]) {
         console.log("================X==============")
-        console.log("COUNTRY CONFIG NOT FOUND..!")
+        console.log("COUNTRY CONFIG NOT FOUND..for !", countyType)
         console.log("================X==============")
         process.exit(0);
     }
@@ -28,15 +60,10 @@ const getConfigs = (key) => {
     delete headerMap[countyType].ADD_NEW_COLUMNS_API;
     const headerMapping = headerMap[countyType];
 
-    return {
-        county: county.toUpperCase(),
-        headerMapping: headerMapping,
-        _inputDir: _inputDir,
-        //_outputDir: _outputDir,
-        addNewColumns: addNewColumns }
+    return { headerMapping, addNewColumns};
 }
 
-const processFilesRemap = async(headerMapping, _inputDir,addNewColumns, county) => {
+const processFilesRemap = async(_inputDir, county) => {
 
     //let fileList =  await fs.promises.readdir(_inputDir);
     let fileList =  await getAllFiles(_inputDir, 'WIP');
@@ -48,6 +75,7 @@ const processFilesRemap = async(headerMapping, _inputDir,addNewColumns, county) 
     console.log("File Count :",fileList.length)
     //fileList = fileList.filter(i=> i.endsWith(".xlsx"));
     for (let i = 0; i < fileList.length; i++) {
+        let {headerMapping, addNewColumns} = await getHeaderMap(county, fileList[i]);
         let _outputDir = fileList[i].replace("/WIP/", "/FINAL/");
         const fileName = `${fileList[i]}`;
         const outputName = _outputDir;
@@ -56,13 +84,13 @@ const processFilesRemap = async(headerMapping, _inputDir,addNewColumns, county) 
 }
 
 const main = async () => {
-    const { county, headerMapping,_inputDir, addNewColumns} = getConfigs();
+    const { county,_inputDir} = getConfigs();
     //console.log('=== VALIDATING HEADERS ===');
     //await validateHeaders();
 
     console.log('\n=== REMAPPING HEADERS ===');
     console.log("COUNTY::>",county);
-    await processFilesRemap(headerMapping, _inputDir, addNewColumns, county);
+    await processFilesRemap(_inputDir, county);
 }
 
 main();
