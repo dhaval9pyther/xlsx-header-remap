@@ -16,18 +16,18 @@ export const  remapHeader = async(headerMapping, fileName, outputName, addNewCol
       addNewColumns
     );
     
-    console.log('Remapping Result:', JSON.stringify(result, null, 2));
-    
-    if (result.success) {
-      console.log('Headers successfully remapped!');
+    console.log('Remapping Result:', result.success);
+    console.log('Headers successfully remapped!', fileName.split('/').pop());
+    console.log('------------------------------------------------------------')
+    if (false && result.success) {
       
       // Log which headers were mapped in each sheet
-      Object.entries(result.sheets).forEach(([sheetName, sheetResult]) => {
-        console.log(`\nSheet: ${sheetName}`);
-        console.log('Mapped headers:', sheetResult.mappedHeaders);
+      //Object.entries(result.sheets).forEach(([sheetName, sheetResult]) => {
+        //console.log(`\nSheet: ${sheetName}`);
+        //console.log('Mapped headers:', sheetResult.mappedHeaders);
         //console.log('Unmapped headers:', sheetResult.unmappedHeaders);
-        console.log('Added blank columns:', sheetResult.addedColumns);
-      });
+        //console.log('Added blank columns:', sheetResult.addedColumns);
+      //});
     }
   } catch (error) {
     console.error('Error:', error);

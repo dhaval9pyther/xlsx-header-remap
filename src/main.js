@@ -12,6 +12,7 @@ const getConfigs = (key) => {
     const countyArgs = args.find((arg) => arg.startsWith("--country="));
     const county = countyArgs?.split("=")[1].toUpperCase();
 
+    console.log("county::>",county)
     if (!headerMap[county]) {
         console.log("================X==============")
         console.log("COUNTRY CONFIG NOT FOUND..!")
@@ -40,6 +41,7 @@ const processFilesRemap = async(headerMapping, _inputDir, _outputDir,addNewColum
         await fs.mkdirSync(_outputDir, { recursive: true });
     }
 
+    //console.log("File Count :",fileList.length)
     fileList = fileList.filter(i=> i.endsWith(".xlsx"));
     for (let i = 0; i < fileList.length; i++) {
         const fileName = `${_inputDir}/${fileList[i]}`;

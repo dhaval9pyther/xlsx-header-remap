@@ -1,16 +1,4 @@
 export const headerMap = {
-    "CHINA": {
-        "PRODUCT RAW": "RAW_PRODUCT"
-    },
-    "INDIA": {
-        "PRODUCT": "PRODUCT_RAW"
-    },
-    "VEN": {
-        "HS_CODE": "HS_CODE____01"
-    },
-    "BOTSWANA_IMPORT": {
-        "BUYER_NAME": "IMPORTER"
-    },
     "BOTSWANA_EXPORT": {
         "BUYER_NAME": "IMPORTER",
         "COUNTRY_OF_DESTINATION": "DESTINATION",
@@ -21,5 +9,110 @@ export const headerMap = {
         "QUANTITY": "QUANTITY",
         "QUANTITY_UNIT": "UNIT",
         "ADD_NEW_COLUMNS_API": ["PRODUCT", "UNIT RATE", "CURRENCY", "ORIGIN"]
+    },
+    "BOTSWANA_IMPORT": {
+        "CNF_CIF_IN_USD": "TOTALUSD",
+        "COUNTRY_OF_ORIGIN": "ORIGIN",
+        "HS_CODE": "HS CODE",
+        "IMPORTER_NAME": "IMPORTER",
+        "IMPORT_DATE": "DATE",
+        "QUANTITY": "QUANTITY",
+        "QUANTITY_UNIT": "UNIT",
+        "SUPPLIER_NAME": "EXPORTER",
+        "ADD_NEW_COLUMNS_API": ["UNIT RATE", "CURRENCY", "DESTINATION", "PRODUCT"]
+    },
+    "BURUNDI_IMPORT": {
+        "CIF_USD": "TOTALUSD",
+        "ORIGIN_COUNTRY": "ORIGIN",
+        "HS_CODE": "HS CODE",
+        "IMPORTER_NAME": "IMPORTER",
+        "IMP_DATE": "DATE",
+        "QUANTITY": "QUANTITY",
+        "SUPPLIER_NAME": "EXPORTER",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "UNIT": "UNIT",
+        "ADD_NEW_COLUMNS_API": ["UNIT RATE", "CURRENCY", "DESTINATION",]
+    },
+    "BRAZIL_EXPORT": {
+        "CONSIGNEE_NAME": "IMPORTER",
+        "CONSIGNEE_COUNTRY": "DESTINATION",
+        "SHIPPER_NAME": "EXPORTER",
+        "SHIPMENT_DATE": "DATE",
+        "VALUE_IN_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "METRIC_TONS": "QUANTITY",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "ADD_NEW_COLUMNS_API": ["UNIT", "UNIT RATE", "CURRENCY", "ORIGIN"]
+    },
+    "BRAZIL_IMPORT": {
+        "CONSIGNEE_NAME": "IMPORTER",
+        "SHIPPER_COUNTRY": "ORIGIN",
+        "SHIPPER_NAME": "EXPORTER",
+        "SHIPMENT_DATE": "DATE",
+        "VALUE_IN_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "METRIC_TONS": "QUANTITY",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "ADD_NEW_COLUMNS_API": ["UNIT", "UNIT RATE", "CURRENCY", "DESTINATION"]
+    },
+    "LIBERIA_IMPORT": {
+        "CURENCY": "CURENCY_2",
+        "IMPORTER_NAME": "IMPORTER",
+        "SUPPLY_COUNTRY": "ORIGIN",
+        "SUPPLIER_NAME": "EXPORTER",
+        "IMP_DATE": "DATE",
+        "HS_CODE": "HS CODE",
+        "QUANTITY": "QUANTITY",
+        "QUANTITY_TYPE": "UNIT",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "ADD_NEW_COLUMNS_API": ["TOTALUSD", "UNIT RATE", "CURRENCY", "DESTINATION"]
+    },
+    "CAMEROON_EXPORT": {
+        "BUYER_NAME": "IMPORTER",
+        "DESTINATION_COUNTRY": "DESTINATION",
+        "EXPORTER_NAME": "EXPORTER",
+        "DECLARATION_DATE": "DATE",
+        "TOTAL_VALUE_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "QUANTITY": "QUANTITY",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "CURRENCY": "CURRENCY_2",
+        "UNIT": "UNIT",
+        "UNIT_VALUE_USD": "UNIT RATE",
+        "ADD_NEW_COLUMNS_API": ["CURRENCY", "ORIGIN"]
+    },
+    "CAMEROON_IMPORT": {
+        "IMPORTER_NAME": "IMPORTER",
+        "EXPORT_COUNTRY": "ORIGIN",
+        "SUPPLIER_NAME": "EXPORTER",
+        "DECLARATION_DATE": "DATE",
+        "TOTAL_VALUE_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "QUANTITY": "QUANTITY",
+        "PRODUCT_DESCRIPTION": "PRODUCT",
+        "CURRENCY": "CURRENCY_2",
+        "UNIT": "UNIT",
+        "UNIT_VALUE_USD": "UNIT RATE",
+        "ADD_NEW_COLUMNS_API": ["CURRENCY", "DESTINATION"]
+    },
+    "NIGERIA_EXPORT": {
+        "BUYER_NAME": "IMPORTER",
+        "DESTINATION_COUNTRY": "DESTINATION",
+        "EXPORTER_NAME": "EXPORTER",
+        "REGISTRY_DATE": "DATE",
+        "FOB_USD": "TOTALUSD",
+        "HS_CODE": "HS CODE",
+        "QUANTITY": "QUANTITY",
+        "CURRENCY": "CURRENCY_2",
+        "ADD_NEW_COLUMNS_API": ["PRODUCT", "UNIT", "UNIT RATE", "CURRENCY", "ORIGIN"]
+    },
+    "NIGERIA_IMPORT": {
+        "CIF_USD": "TOTALUSD",
+        "SUPPLY_COUNTRY": "ORIGIN",
+        "HS_CODE": "HS CODE",
+        "IMPORTER_NAME": "IMPORTER",
+        "REGISTRY_DATE": "DATE",
+        "SUPPLIER_NAME": "EXPORTER",
+        "ADD_NEW_COLUMNS_API": ["UNIT RATE", "CURRENCY", "DESTINATION", "PRODUCT", "QUANTITY", "UNIT"]
     }
 }

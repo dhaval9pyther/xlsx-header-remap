@@ -33,6 +33,15 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
       sheets: {}
     };
     
+    if (workbook.SheetNames.length > 1) {
+      console.log("Failed, More then one sheet present");
+      result.success = false;
+      result.message = "Failed, More then one sheet present";
+      return {
+        success: false,
+        message: `Failed, More then one sheet present : ${inputFilePath}`,
+      };
+    }
     workbook.SheetNames.forEach(sheetName => {
       const worksheet = workbook.Sheets[sheetName];
       
@@ -47,11 +56,16 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
         return;
       }
       
+      const range = xlsx.utils.decode_range(worksheet['!ref']);
+      console.log("jsonData::>",jsonData.length);
+      console.log("XLSX ::>",range.e.r - range.s.r);
+
       // Get current headers (keys of the first object)
       const currentHeaders = Object.keys(jsonData[0]);
       const updatedHeaders = new Map();
       const unmappedHeaders = [];
       
+      console.log("Header count(Before)",currentHeaders.length)
       // Check which headers exist in the mapping
       currentHeaders.forEach(header => {
         if (header in headerMapping) {
@@ -75,10 +89,10 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
         newColumns.forEach(columnName => {
           newRow[columnName] = '';
         });
-        
         return newRow;
       });
       
+      console.log("Header count( After)",updatedData[0].length)
       // Update the sheet with the modified data
       const newWorksheet = xlsx.utils.json_to_sheet(updatedData);
       workbook.Sheets[sheetName] = newWorksheet;
@@ -93,7 +107,7 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
     });
     
     // Write the updated workbook to the output file
-    xlsx.writeFile(workbook, outputFilePath);
+    xlsx.writeFile(workbook, outputFilePath,{ compression: true });
     
     return result;
   } catch (error) {
@@ -136,7 +150,7 @@ export const validateXlsxHeaders = async(filePath, expectedHeaders) =>{
     // Process each sheet
     workbook.SheetNames.forEach(sheetName => {
       const worksheet = workbook.Sheets[sheetName];
-      const jsonData = xlsx.utils.sheet_to_json(worksheet);
+      const jsonData = xlsx.utils.sheet_to_json(worksheet, { defval: '' });
       
       if (jsonData.length === 0) {
         result.sheets[sheetName] = {
