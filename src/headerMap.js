@@ -57,8 +57,9 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
       const worksheet = workbook.Sheets[sheetName];
       
       // Convert sheet to JSON to work with the data more easily
-      const jsonData = xlsx.utils.sheet_to_json(worksheet);
+      const jsonData = xlsx.utils.sheet_to_json(worksheet, { defval: "" });
       
+      console.log("row:>",jsonData[0])
       if (jsonData.length === 0) {
         result.sheets[sheetName] = {
           status: 'skipped',
@@ -71,12 +72,21 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
       console.log("jsonData::>",jsonData.length);
       console.log("XLSX ::>",range.e.r - range.s.r);
 
+      const headers = Object.keys(jsonData[0]);
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const cellAddress = xlsx.utils.encode_cell({ r: range.s.r, c: C }); // Row 0 (first row)
+        const cell = worksheet[cellAddress];
+        const header = cell ? cell.v : `UNKNOWN_${C}`;
+        headers.push(header);
+      }
+
       // Get current headers (keys of the first object)
       const currentHeaders = Object.keys(jsonData[0]);
       const updatedHeaders = new Map();
       const unmappedHeaders = [];
       
       console.log("Header count(Before)",currentHeaders.length)
+      console.log("Header count(Before) : ref ",headers.length)
       // Check which headers exist in the mapping
       currentHeaders.forEach(header => {
         if (header in headerMapping) {
@@ -103,7 +113,7 @@ export const remapXlsxHeaders = async(inputFilePath, outputFilePath, headerMappi
         return newRow;
       });
       
-      console.log("Header count( After)",updatedData[0].length)
+      console.log("Header count( After)",Object.keys(updatedData[0]).length)
       // Update the sheet with the modified data
       const newWorksheet = xlsx.utils.json_to_sheet(updatedData);
       workbook.Sheets[sheetName] = newWorksheet;

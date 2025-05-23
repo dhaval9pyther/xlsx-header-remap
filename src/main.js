@@ -57,8 +57,8 @@ const getHeaderMap = (county, filePath) => {
     }
 
     const addNewColumns = headerMap[countyType].ADD_NEW_COLUMNS_API;
-    delete headerMap[countyType].ADD_NEW_COLUMNS_API;
-    const headerMapping = headerMap[countyType];
+    const headerMapping = Object.assign({},headerMap[countyType]);
+    delete headerMapping.ADD_NEW_COLUMNS_API;
 
     return { headerMapping, addNewColumns};
 }
@@ -79,6 +79,7 @@ const processFilesRemap = async(_inputDir, county) => {
         let _outputDir = fileList[i].replace("/WIP/", "/FINAL/");
         const fileName = `${fileList[i]}`;
         const outputName = _outputDir;
+        console.log("addNewColumns::>",addNewColumns)
         await remapHeader(headerMapping, fileName, outputName, addNewColumns);
     }
 }
